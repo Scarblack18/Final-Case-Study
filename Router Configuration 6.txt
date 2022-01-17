@@ -1,0 +1,58 @@
+R6#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R6(config)#enable secret cisco
+R6(config)#service password encryption
+                            ^
+% Invalid input detected at '^' marker.
+
+R6(config)#service password-encryption
+R6(config)#no ip domain-lookup
+R6(config)#int fa0/0
+R6(config-if)#10.0.0.6 255.255.255.0
+              ^
+% Invalid input detected at '^' marker.
+
+R6(config-if)#ip add 10.0.0.6 255.255.255.0
+R6(config-if)#no shut
+R6(config-if)#exit
+R6(config)#int loop
+*Mar  1 00:14:26.839: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:14:27.839: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R6(config)#int loopback 0
+R6(config-if)#ip
+*Mar  1 00:14:31.203: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R6(config-if)#ip add 6.6.6.6 255.255.255.255
+R6(config-if)#exit
+R6(config)#line vty 0 4
+R6(config-line)#login local
+R6(config-line)#transport input ssh
+R6(config-line)#ip domain-name cisco.com
+R6(config)#exit
+R6#
+*Mar  1 00:15:07.827: %SYS-5-CONFIG_I: Configured from console by console
+R6#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R6#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R6(config)#router eigrp 1
+R6(config-router)#network 0.0.0.0
+R6(config-router)#end
+R6#
+*Mar  1 00:15:33.431: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.4 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:15:33.435: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.1 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:15:33.439: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.3 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:15:33.439: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.2 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:15:33.443: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.5 (FastEthernet0/0) is up: new adjacency
+R6#
+*Mar  1 00:15:34.863: %SYS-5-CONFIG_I: Configured from console by console
+R6#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R6#ping 1.1.1.1
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+!!!!!

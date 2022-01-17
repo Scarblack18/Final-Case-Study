@@ -1,0 +1,54 @@
+R9#
+R9#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R9(config)#enable secret cisco
+R9(config)#service password-encryption
+R9(config)#no ip domain-lookup
+R9(config)#int fa0/0
+R9(config-if)#ip add 172.17.1.2 255.255.255.0
+R9(config-if)#nop shut
+                ^
+% Invalid input detected at '^' marker.
+
+R9(config-if)#no shut
+R9(config-if)#exit
+R9(config)#int
+*Mar  1 00:21:33.903: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:21:34.903: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R9(config)#int fa0/1
+R9(config-if)#ip add 172.16.1.2 255.255.255.0
+R9(config-if)#no shut
+R9(config-if)#exit
+R9(config)#int
+*Mar  1 00:22:00.983: %LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to up
+*Mar  1 00:22:01.983: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+R9(config)#int loopback 0
+R9(config-if)#
+*Mar  1 00:22:05.559: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R9(config-if)#ip add 9.9.9.9 255.255.255.255
+R9(config-if)#exit
+R9(config)#line vty 0 4
+R9(config-line)#enable secret cisco
+R9(config)#line vty 0 4
+R9(config-line)#login local
+R9(config-line)#transport input ssh
+R9(config-line)#ip domain-name cisco.com
+R9(config)#exit
+R9#co
+*Mar  1 00:23:22.395: %SYS-5-CONFIG_I: Configured from console by console
+R9#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R9(config)#router eigrp 1
+R9(config-router)#network 172.17.1.0
+R9(config-router)#netw
+*Mar  1 00:23:42.751: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 172.17.1.1 (FastEthernet0/0) is up: new adjacency
+R9(config-router)#network 0.0.0.0
+R9(config-router)#exit
+R9(config)#end
+R9#copy
+*Mar  1 00:24:05.495: %SYS-5-CONFIG_I: Configured from console by console
+R9#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R9#

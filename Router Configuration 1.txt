@@ -1,0 +1,98 @@
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#config t
+                  ^
+% Invalid input detected at '^' marker.
+
+R1(config)#int loopback 0
+R1(config-if)#ip add
+*Mar  1 00:02:40.571: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R1(config-if)#ip add 10.0.0.1 255.255.255.255
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#int fa0/0
+R1(config-if)#ip add 192.168.1.1 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#exit
+*Mar  1 00:03:23.283: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:03:24.283: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R1(config-if)#exit
+R1(config)#exit
+R1#co
+*Mar  1 00:03:28.335: %SYS-5-CONFIG_I: Configured from console by console
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#enable secret cisco
+R1(config)#service password-encryption
+R1(config)#no ip domain lookup
+R1(config)#line vty 0 4
+R1(config-line)#login local
+R1(config-line)#transport input ssh
+R1(config-line)#exit
+R1(config)#router eigrp 1
+R1(config-router)#network 0.0.0.0
+R1(config-router)#end
+R1#
+*Mar  1 00:05:49.315: %SYS-5-CONFIG_I: Configured from console by console
+R1#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R1#
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#no int loopback 0
+R1(config)#int loopb
+*Mar  1 00:09:35.683: %LINK-5-CHANGED: Interface Loopback0, changed state to administratively down
+*Mar  1 00:09:36.683: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to down
+R1(config)#int loopback 0
+R1(config-if)#ip add
+*Mar  1 00:09:40.987: %LINK-3-UPDOWN: Interface Loopback0, changed state to up
+*Mar  1 00:09:41.987: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R1(config-if)#ip add 1.1.1.1 255.255.255.255
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#end
+R1#copy
+*Mar  1 00:09:52.635: %SYS-5-CONFIG_I: Configured from console by console
+R1#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R1#
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#router eigrp 1
+R1(config-router)#no auto-summary
+R1(config-router)#end
+R1#cop
+*Mar  1 00:12:30.579: %SYS-5-CONFIG_I: Configured from console by console
+R1#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#int fa0/1
+R1(config-if)#ip add 10.0.0.1
+% Incomplete command.
+
+R1(config-if)#ip add 10.0.0.1 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#
+*Mar  1 00:14:27.639: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.2 (FastEthernet0/1) is up: new adjacency
+R1(config-if)#
+*Mar  1 00:14:28.055: %LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to up
+*Mar  1 00:14:29.055: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+R1(config-if)#exit
+R1(config)#copy run start
+             ^
+% Invalid input detected at '^' marker.
+
+R1(config)#end
+R1#xo
+*Mar  1 00:14:44.179: %SYS-5-CONFIG_I: Configured from console by console
+R1#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]

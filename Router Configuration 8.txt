@@ -1,0 +1,47 @@
+
+R8#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R8(config)#enable secret cisco
+R8(config)#service password-encryption
+R8(config)#no ip domain-lookup
+R8(config)#int fa0/0
+R8(config-if)#ip add 10.0.0.8 255.255.255.0
+R8(config-if)#no shut
+R8(config-if)#exit
+R8(config)#int loopback
+*Mar  1 00:17:27.971: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:17:28.971: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R8(config)#int loopback 0
+R8(config-if)#
+*Mar  1 00:17:31.467: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R8(config-if)#ip add 8.8.8.8 255.255.255.255
+R8(config-if)#exit
+R8(config)#line vty 0 4
+R8(config-line)#login local
+R8(config-line)#transport input ssh
+R8(config-line)#ip domain-name cisco.com
+R8(config)#exit
+R8#conf
+*Mar  1 00:18:29.263: %SYS-5-CONFIG_I: Configured from console by console
+R8#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R8(config)#router eigrp 1
+R8(config-router)#network 0.0.0.0
+R8(config-router)#
+*Mar  1 00:18:44.695: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.7 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:18:44.695: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.5 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:18:44.699: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.4 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:18:44.699: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.2 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:18:44.719: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.6 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:18:44.719: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.3 (FastEthernet0/0) is up: new adjacency
+R8(config-router)#
+*Mar  1 00:18:44.719: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.1 (FastEthernet0/0) is up: new adjacency
+R8(config-router)#exit
+R8(config)#end
+R8#copy
+*Mar  1 00:18:49.651: %SYS-5-CONFIG_I: Configured from console by console
+R8#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R8#

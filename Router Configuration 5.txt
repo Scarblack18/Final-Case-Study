@@ -1,0 +1,47 @@
+
+
+R5(config)#enable secret cisco
+R5(config)#service password-encryption
+R5(config)#no ip domain lookup
+R5(config)#int fa0/0
+R5(config-if)#ip add 10.0.0.5 255.255.255.0
+R5(config-if)#no shut
+R5(config-if)#exit
+R5(config)#int loop
+*Mar  1 00:13:13.787: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:13:14.787: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R5(config)#int loopback 0
+R5(config-if)#ip add 5
+*Mar  1 00:13:20.355: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R5(config-if)#ip add 5.5.5.5 255.255.255.255
+R5(config-if)#exit
+R5(config)#line vty 0 4
+R5(config-line)#login local
+R5(config-line)#transport input ssh
+R5(config-line)#ip domaine-name cisco
+                   ^
+% Invalid input detected at '^' marker.
+
+R5(config-line)#ip domain-name cisco.com
+R5(config)#exit
+R5#confi
+*Mar  1 00:14:07.879: %SYS-5-CONFIG_I: Configured from console by console
+R5#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R5(config)#router eigrp 1
+R5(config-router)#network 0.0.0.0
+R5(config-router)#
+*Mar  1 00:14:20.571: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.4 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:14:20.575: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.3 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:14:20.575: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.2 (FastEthernet0/0) is up: new adjacency
+*Mar  1 00:14:20.579: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 1: Neighbor 10.0.0.1 (FastEthernet0/0) is up: new adjacency
+R5(config-router)#exit
+R5(config)#end
+R5#copy ru
+*Mar  1 00:14:25.915: %SYS-5-CONFIG_I: Configured from console by console
+R5#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R5#
+R5#
